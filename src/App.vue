@@ -1,6 +1,6 @@
 <template>
   <the-background :bgSrc="setBgImg" :color="setBgColor"></the-background>
-  <main class="flex flex-col w-1/3 mt-24 ">
+  <main class="flex flex-col w-1/3 mt-24">
     <div class="flex justify-between items-center mb-10">
       <the-title
         title="T O D O"
@@ -33,6 +33,7 @@
         :tasksAmount="setActiveTaskAmount"
       ></navi-bar>
     </div>
+
     </div>
   </main>
 </template>
@@ -47,6 +48,7 @@ import NaviBar from "./components/NaviBar.vue";
 
 import bg_desktop_dark from "./assets/images/bg-desktop-dark.jpg";
 import bg_desktop_light from "./assets/images/bg-desktop-light.jpg";
+
 
 export default {
   components: {
@@ -64,19 +66,24 @@ export default {
       darkMode: true,
       activeLink: "all",
 
+
       tasks: [],
     };
   },
   computed: {
     setBgColor() {
+
       return this.darkMode ? "bg-[#161722]" : "bg-[#FAFAFA]";
+
     },
     setBgImg() {
       return this.darkMode ? bg_desktop_dark : bg_desktop_light;
     },
+
     setActiveTaskAmount() {
       return this.tasks.filter((el) => el.status === "active").length;
     },
+
   },
   methods: {
     setDarkMode() {
@@ -84,16 +91,19 @@ export default {
     },
     addTasks(item) {
       const task = {
+
         id: new Date().toISOString(),
         content: item,
         status: "active",
       };
       this.tasks.push(task);
       this.tasks = this.tasks.slice();
+
     },
     removeTast(task) {
       const index = this.tasks.findIndex((el) => el.id === task);
       this.tasks.splice(index, 1);
+
       this.tasks = this.tasks.slice();
     },
     completeTast(task) {
@@ -110,5 +120,6 @@ export default {
       this.tasks = this.tasks.slice();
     },
   },
+
 };
 </script>

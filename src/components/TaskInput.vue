@@ -1,7 +1,9 @@
 <template>
+
 <main-box :isDarkMode="isDarkMode">
 <button><empty-icon hover="false"></empty-icon></button>
 <input v-model="text" @keyup.enter="submit" class="ml-5 w-full bg-transparent focus:outline-none" :class="setColor" type="text" placeholder="Create a new todo.. ">
+
 </main-box>
 </template>
 
@@ -20,6 +22,7 @@ export default{
             text: ""
         }
     },
+
     props: {
         isDarkMode: {
             type: Boolean,
@@ -35,6 +38,7 @@ export default{
     methods: {
         submit(){
             if(this.text.trim() === "") return;
+
             this.$emit('task-added',this.text);
             this.text = ""
         }

@@ -1,4 +1,5 @@
 <template>
+
     <div class="w-full p-4 flex items-center rounded-sm" :class="setDarkMode">
         <slot></slot>
     </div>
@@ -23,3 +24,4 @@ export default{
 
 
 </script>
+

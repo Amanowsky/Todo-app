@@ -1,4 +1,5 @@
 <template>
+
 <div class="max-h-80 overflow-auto scroll ">
 <!--<main-box v-if="tasks.length === 0" class="border-b border-[#4D5066]">
     <task-box :task="NoTaskMessage"></task-box>
@@ -14,6 +15,7 @@
 </main-box>
 </div>
 
+
 </div>
 </template>
 
@@ -28,13 +30,16 @@ export default{
                 id: null,
                 content: "No task has been added",
                 status: null,
+
             },
+
         }
     },
     components: {
         MainBox,
         TaskBox,
     },
+
     computed: {
         setActiveTasks(){
             return this.tasks.filter(el => el.status === "active")
@@ -43,11 +48,13 @@ export default{
             return this.tasks.filter(el => el.status === "complete")
         },
     },
+
     props:{
         tasks: {
             type: Array,
             required: true
         },
+
         activeFilter: {
             type: String,
             required: true
@@ -56,6 +63,7 @@ export default{
             type: Boolean,
             required: true
         }
+
 
     },
     emits: ['remove-task','complete-task'],

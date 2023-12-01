@@ -1,15 +1,19 @@
 <template>
+
   <main-box :isDarkMode="isDarkMode" class="flex justify-between">
     <TasksAmount
       :tasksAmount="tasksAmount"
       :class="settextColor"
+
     ></TasksAmount>
     <div class="flex h-full gap-5">
       <filter-link @click="setType('all')" :class="setAll">All</filter-link>
       <filter-link @click="setType('active')" :class="setActive">Active</filter-link>
       <filter-link @click="setType('completed')" :class="setCompleted">Completed</filter-link>
     </div>
+
     <filter-link @click="clearComplete" :class="setButtonColor">Clear Completed</filter-link>
+
   </main-box>
 </template>
 
@@ -32,6 +36,7 @@ export default {
     isActive: {
         type: String,
         required: true
+
     },
     isDarkMode: {
       type: Boolean,
@@ -66,14 +71,17 @@ export default {
     },
     setButtonColor(){
       return this.isDarkMode ? "text-[#4D5066] hover:text-[#E4E5F1]" : "text-[#9394A5] hover:text-[#4D5066]"
+
     }
   },
   methods: {
     setType(data){
         this.$emit('set-link',data)
+
     },
     clearComplete(){
       this.$emit('clear-completed');
+
     }
   }
 };
