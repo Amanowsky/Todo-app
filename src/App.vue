@@ -1,6 +1,6 @@
 <template>
   <the-background :bgSrc="setBgImg" :color="setBgColor"></the-background>
-  <main class="flex flex-col w-1/3 mt-24">
+  <main class="flex flex-col w-1/3 mt-24 ">
     <div class="flex justify-between items-center mb-10">
       <the-title
         title="T O D O"
@@ -11,12 +11,14 @@
         :darkMode="darkMode"
       ></darkmode-button>
     </div>
-    <task-input @task-added="addTasks"></task-input>
+    <task-input class="shadow-xl" :isDarkMode="darkMode" @task-added="addTasks"></task-input>
+    <div v-if="this.tasks.length !== 0" class="shadow-xl">
     <div class="mt-5">
       <task-area
         @complete-task="completeTast"
         @remove-task="removeTast"
         :activeFilter="activeLink"
+        :isDarkMode="darkMode"
         :tasks="tasks"
       ></task-area>
     </div>
@@ -26,9 +28,11 @@
         @clear-completed="clearAllCompleted"
         @set-link="setActiveFilter"
         class="text-sm"
+        :isDarkMode="darkMode"
         :isActive="activeLink"
         :tasksAmount="setActiveTaskAmount"
       ></navi-bar>
+    </div>
     </div>
   </main>
 </template>
@@ -65,7 +69,7 @@ export default {
   },
   computed: {
     setBgColor() {
-      return this.darkMode ? "bg-[#161722]" : "bg-[#ffffff]";
+      return this.darkMode ? "bg-[#161722]" : "bg-[#FAFAFA]";
     },
     setBgImg() {
       return this.darkMode ? bg_desktop_dark : bg_desktop_light;

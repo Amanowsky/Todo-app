@@ -32,13 +32,21 @@ export default{
             default() {
                 return false
             }
+        },
+        isDarkMode: {
+            type: Boolean,
+            required: true
         }
     },
 
     emits: ['remove-task','complete-task'],
     computed: {
         setCompleteClass(){
+            if(this.isDarkMode === true){
           return this.isCompletebox === true ? "text-[#4D5066] line-through"  : "text-[#CACDE8]"
+            }else{
+                return this.isCompletebox === true ? "text-[#CACDE8] line-through" : "text-[#4D5066]"
+            }
         }
     },
     methods: {
