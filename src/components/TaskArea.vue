@@ -1,11 +1,20 @@
 <template>
-<div class="max-h-80 overflow-auto scroll">
+
+<div class="max-h-80 overflow-auto scroll ">
 <!--<main-box v-if="tasks.length === 0" class="border-b border-[#4D5066]">
     <task-box :task="NoTaskMessage"></task-box>
 </main-box>-->
-<main-box v-for="task in tasks" :key="task.id" class="border-b border-[#4D5066]">
-    <task-box @complete-task="setComplete" @remove-task="removeTast" :task="task"></task-box>
+<div v-if="activeFilter === 'all' || activeFilter === 'completed'">
+<main-box :isDarkMode="isDarkMode" v-for="task in setCompletedTasks"  :key="task.id" class="border-b border-[#4D5066]">
+    <task-box :isDarkMode="isDarkMode" @complete-task="setComplete" @remove-task="removeTast" :isCompletebox="true" :task="task"></task-box>
 </main-box>
+</div>
+<div v-if="activeFilter === 'all' || activeFilter === 'active'">
+<main-box :isDarkMode="isDarkMode" v-for="task in setActiveTasks" :key="task.id" class="border-b border-[#4D5066]">
+    <task-box :isDarkMode="isDarkMode" @complete-task="setComplete" @remove-task="removeTast" :isCompletebox="false" :task="task"></task-box>
+</main-box>
+</div>
+
 
 </div>
 </template>
@@ -21,18 +30,40 @@ export default{
                 id: null,
                 content: "No task has been added",
                 status: null,
-            }            
+
+            },
+
         }
     },
     components: {
         MainBox,
         TaskBox,
     },
+
+    computed: {
+        setActiveTasks(){
+            return this.tasks.filter(el => el.status === "active")
+        },
+        setCompletedTasks(){
+            return this.tasks.filter(el => el.status === "complete")
+        },
+    },
+
     props:{
         tasks: {
             type: Array,
             required: true
         },
+
+        activeFilter: {
+            type: String,
+            required: true
+        },
+        isDarkMode: {
+            type: Boolean,
+            required: true
+        }
+
 
     },
     emits: ['remove-task','complete-task'],

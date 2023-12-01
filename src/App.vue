@@ -11,12 +11,29 @@
         :darkMode="darkMode"
       ></darkmode-button>
     </div>
-    <task-input @task-added="addTasks"></task-input>
+    <task-input class="shadow-xl" :isDarkMode="darkMode" @task-added="addTasks"></task-input>
+    <div v-if="this.tasks.length !== 0" class="shadow-xl">
     <div class="mt-5">
-      <task-area @complete-task="completeTast" @remove-task="removeTast" :tasks="tasks"></task-area>
+      <task-area
+        @complete-task="completeTast"
+        @remove-task="removeTast"
+        :activeFilter="activeLink"
+        :isDarkMode="darkMode"
+        :tasks="tasks"
+      ></task-area>
     </div>
     <div class="flex">
-      <navi-bar @set-link="setActive" class="text-sm" :isActive="activeLink" :tasksAmount="5"></navi-bar>
+      <navi-bar
+        v-if="tasks.length !== 0"
+        @clear-completed="clearAllCompleted"
+        @set-link="setActiveFilter"
+        class="text-sm"
+        :isDarkMode="darkMode"
+        :isActive="activeLink"
+        :tasksAmount="setActiveTaskAmount"
+      ></navi-bar>
+    </div>
+
     </div>
   </main>
 </template>
@@ -32,6 +49,7 @@ import NaviBar from "./components/NaviBar.vue";
 import bg_desktop_dark from "./assets/images/bg-desktop-dark.jpg";
 import bg_desktop_light from "./assets/images/bg-desktop-light.jpg";
 
+
 export default {
   components: {
     TheBackground,
@@ -46,18 +64,26 @@ export default {
       bg_desktop_dark,
       bg_desktop_light,
       darkMode: true,
-      activeLink: 'all',
+      activeLink: "all",
+
 
       tasks: [],
     };
   },
   computed: {
     setBgColor() {
-      return this.darkMode ? "bg-[#161722]" : "bg-[#ffffff]";
+
+      return this.darkMode ? "bg-[#161722]" : "bg-[#FAFAFA]";
+
     },
     setBgImg() {
       return this.darkMode ? bg_desktop_dark : bg_desktop_light;
     },
+
+    setActiveTaskAmount() {
+      return this.tasks.filter((el) => el.status === "active").length;
+    },
+
   },
   methods: {
     setDarkMode() {
@@ -65,27 +91,34 @@ export default {
     },
     addTasks(item) {
       const task = {
-                id: new Date().toISOString(),
-                content: item,
-                status: 'active'
-            };
-            this.tasks.push(task);
-            this.tasks = this.tasks.slice(); 
+
+        id: new Date().toISOString(),
+        content: item,
+        status: "active",
+      };
+      this.tasks.push(task);
+      this.tasks = this.tasks.slice();
 
     },
     removeTast(task) {
       const index = this.tasks.findIndex((el) => el.id === task);
       this.tasks.splice(index, 1);
-      this.tasks = this.tasks.slice(); 
+
+      this.tasks = this.tasks.slice();
     },
-    completeTast(task){
-      const index = this.tasks.findIndex(el => el.id === task);
-      this.tasks[index].status = "complete";
-      console.log(this.tasks);
+    completeTast(task) {
+      const index = this.tasks.findIndex((el) => el.id === task);
+      this.tasks[index].status =
+        this.tasks[index].status === "active" ? "complete" : "active";
+      this.tasks = this.tasks.slice();
     },
-    setActive(data){
+    setActiveFilter(data) {
       this.activeLink = data;
-    }
+    },
+    clearAllCompleted() {
+      this.tasks = this.tasks.filter((el) => el.status === "active");
+      this.tasks = this.tasks.slice();
+    },
   },
 
 };
