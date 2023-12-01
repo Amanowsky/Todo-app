@@ -16,7 +16,7 @@
       <task-area @complete-task="completeTast" @remove-task="removeTast" :tasks="tasks"></task-area>
     </div>
     <div class="flex">
-      <navi-bar @set-link="setActiveFilter" class="text-sm" :isActive="activeLink" :tasksAmount="setActiveTaskAmount"></navi-bar>
+      <navi-bar v-if="tasks.length !== 0" @clear-completed="clearAllCompleted" @set-link="setActiveFilter" class="text-sm" :isActive="activeLink" :tasksAmount="setActiveTaskAmount"></navi-bar>
     </div>
   </main>
 </template>
@@ -88,6 +88,10 @@ export default {
     },
     setActiveFilter(data){
       this.activeLink = data;
+    },
+    clearAllCompleted(){
+      this.tasks = this.tasks.filter(el => el.status === 'active');
+      this.tasks = this.tasks.slice(); 
     }
   },
 

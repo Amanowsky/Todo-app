@@ -9,7 +9,7 @@
       <filter-link @click="setType('active')" :class="setActive">Active</filter-link>
       <filter-link @click="setType('completed')" :class="setCompleted">Completed</filter-link>
     </div>
-    <filter-link class="text-[#4D5066] hover:text-[#E4E5F1]">Clear Completed</filter-link>
+    <filter-link @click="clearComplete" class="text-[#4D5066] hover:text-[#E4E5F1]">Clear Completed</filter-link>
   </main-box>
 </template>
 
@@ -34,7 +34,7 @@ export default {
         required: true
     }
   },
-  emits: ['set-link'],
+  emits: ['set-link','clear-completed'],
   computed: {
     setAll(){
         return this.isActive === "all" ? "text-[#3A7BFD]" : "text-[#4D5066] hover:text-[#E4E5F1]"
@@ -49,6 +49,9 @@ export default {
   methods: {
     setType(data){
         this.$emit('set-link',data)
+    },
+    clearComplete(){
+      this.$emit('clear-completed');
     }
   }
 };
