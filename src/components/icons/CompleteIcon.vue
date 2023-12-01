@@ -1,5 +1,5 @@
 <template>
-<EmptyIcon class="flex justify-center items-center bg-gradient-to-r from-blue-400 to-purple-600" hover="false"><check-icon></check-icon></EmptyIcon>
+<EmptyIcon class="flex justify-center cursor-pointer items-center bg-gradient-to-r from-blue-400 to-purple-600" hover="false"><check-icon></check-icon></EmptyIcon>
 
 
 </template>

@@ -16,7 +16,7 @@
       <task-area @complete-task="completeTast" @remove-task="removeTast" :tasks="tasks"></task-area>
     </div>
     <div class="flex">
-      <navi-bar @set-link="setActive" class="text-sm" :isActive="activeLink" :tasksAmount="setActiveTaskAmount"></navi-bar>
+      <navi-bar @set-link="setActiveFilter" class="text-sm" :isActive="activeLink" :tasksAmount="setActiveTaskAmount"></navi-bar>
     </div>
   </main>
 </template>
@@ -83,10 +83,10 @@ export default {
     },
     completeTast(task){
       const index = this.tasks.findIndex(el => el.id === task);
-      this.tasks[index].status = "complete";
+      this.tasks[index].status = this.tasks[index].status === 'active' ? 'complete' : 'active'
       this.tasks = this.tasks.slice(); 
     },
-    setActive(data){
+    setActiveFilter(data){
       this.activeLink = data;
     }
   },
