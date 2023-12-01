@@ -13,10 +13,10 @@
     </div>
     <task-input @task-added="addTasks"></task-input>
     <div class="mt-5">
-      <task-area @remove-task="removeTast" :tasks="tasks"></task-area>
+      <task-area @complete-task="completeTast" @remove-task="removeTast" :tasks="tasks"></task-area>
     </div>
     <div class="flex">
-      <navi-bar @set-link="setActive" class="text-sm" :isActive="activeLink" :tasksAmount="active_tasks.length"></navi-bar>
+      <navi-bar @set-link="setActive" class="text-sm" :isActive="activeLink" :tasksAmount="5"></navi-bar>
     </div>
   </main>
 </template>
@@ -49,8 +49,6 @@ export default {
       activeLink: 'all',
 
       tasks: [],
-      active_tasks: [],
-      completed_tasks: [],
     };
   },
   computed: {
@@ -59,12 +57,6 @@ export default {
     },
     setBgImg() {
       return this.darkMode ? bg_desktop_dark : bg_desktop_light;
-    },
-  },
-  watch: {
-    tasks() {
-      console.log("test");
-      this.active_tasks = this.tasks.filter((el) => el.status === "active");
     },
   },
   methods: {
@@ -86,14 +78,15 @@ export default {
       this.tasks.splice(index, 1);
       this.tasks = this.tasks.slice(); 
     },
+    completeTast(task){
+      const index = this.tasks.findIndex(el => el.id === task);
+      this.tasks[index].status = "complete";
+      console.log(this.tasks);
+    },
     setActive(data){
       this.activeLink = data;
     }
   },
 
-  mounted() {
-    console.log(this.tasks);
-    console.log(this.active_tasks);
-  },
 };
 </script>

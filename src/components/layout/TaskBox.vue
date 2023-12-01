@@ -1,10 +1,10 @@
 <template>
     <div class="w-full flex justify-between items-center">
         <div class="flex items-center">
-            <finish-button></finish-button>
+            <finish-button @click="isComplete"></finish-button>
             <h2 class="ml-5 text-[#CACDE8]" >{{ task.content }}</h2>
         </div>
-        <remove-button @click="isCliced"></remove-button>
+        <remove-button @click="isRemoved"></remove-button>
     </div>
 </template>
 
@@ -25,10 +25,13 @@ export default{
         }
     },
 
-    emits: ['remove-task'],
+    emits: ['remove-task','complete-task'],
     methods: {
-        isCliced(){
+        isRemoved(){
             this.$emit('remove-task',this.task.id)
+        },
+        isComplete(){
+            this.$emit('complete-task',this.task.id)
         }
     }
 }
