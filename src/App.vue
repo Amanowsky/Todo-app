@@ -13,10 +13,22 @@
     </div>
     <task-input @task-added="addTasks"></task-input>
     <div class="mt-5">
-      <task-area @complete-task="completeTast" @remove-task="removeTast" :tasks="tasks"></task-area>
+      <task-area
+        @complete-task="completeTast"
+        @remove-task="removeTast"
+        :activeFilter="activeLink"
+        :tasks="tasks"
+      ></task-area>
     </div>
     <div class="flex">
-      <navi-bar v-if="tasks.length !== 0" @clear-completed="clearAllCompleted" @set-link="setActiveFilter" class="text-sm" :isActive="activeLink" :tasksAmount="setActiveTaskAmount"></navi-bar>
+      <navi-bar
+        v-if="tasks.length !== 0"
+        @clear-completed="clearAllCompleted"
+        @set-link="setActiveFilter"
+        class="text-sm"
+        :isActive="activeLink"
+        :tasksAmount="setActiveTaskAmount"
+      ></navi-bar>
     </div>
   </main>
 </template>
@@ -46,7 +58,7 @@ export default {
       bg_desktop_dark,
       bg_desktop_light,
       darkMode: true,
-      activeLink: 'all',
+      activeLink: "all",
 
       tasks: [],
     };
@@ -58,9 +70,9 @@ export default {
     setBgImg() {
       return this.darkMode ? bg_desktop_dark : bg_desktop_light;
     },
-    setActiveTaskAmount(){
-      return this.tasks.filter(el => el.status === 'active').length
-    }
+    setActiveTaskAmount() {
+      return this.tasks.filter((el) => el.status === "active").length;
+    },
   },
   methods: {
     setDarkMode() {
@@ -68,32 +80,31 @@ export default {
     },
     addTasks(item) {
       const task = {
-                id: new Date().toISOString(),
-                content: item,
-                status: 'active'
-            };
-            this.tasks.push(task);
-            this.tasks = this.tasks.slice(); 
-
+        id: new Date().toISOString(),
+        content: item,
+        status: "active",
+      };
+      this.tasks.push(task);
+      this.tasks = this.tasks.slice();
     },
     removeTast(task) {
       const index = this.tasks.findIndex((el) => el.id === task);
       this.tasks.splice(index, 1);
-      this.tasks = this.tasks.slice(); 
+      this.tasks = this.tasks.slice();
     },
-    completeTast(task){
-      const index = this.tasks.findIndex(el => el.id === task);
-      this.tasks[index].status = this.tasks[index].status === 'active' ? 'complete' : 'active'
-      this.tasks = this.tasks.slice(); 
+    completeTast(task) {
+      const index = this.tasks.findIndex((el) => el.id === task);
+      this.tasks[index].status =
+        this.tasks[index].status === "active" ? "complete" : "active";
+      this.tasks = this.tasks.slice();
     },
-    setActiveFilter(data){
+    setActiveFilter(data) {
       this.activeLink = data;
     },
-    clearAllCompleted(){
-      this.tasks = this.tasks.filter(el => el.status === 'active');
-      this.tasks = this.tasks.slice(); 
-    }
+    clearAllCompleted() {
+      this.tasks = this.tasks.filter((el) => el.status === "active");
+      this.tasks = this.tasks.slice();
+    },
   },
-
 };
 </script>
