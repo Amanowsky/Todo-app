@@ -16,7 +16,7 @@
       <task-area @complete-task="completeTast" @remove-task="removeTast" :tasks="tasks"></task-area>
     </div>
     <div class="flex">
-      <navi-bar @set-link="setActive" class="text-sm" :isActive="activeLink" :tasksAmount="5"></navi-bar>
+      <navi-bar @set-link="setActive" class="text-sm" :isActive="activeLink" :tasksAmount="setActiveTaskAmount"></navi-bar>
     </div>
   </main>
 </template>
@@ -58,6 +58,9 @@ export default {
     setBgImg() {
       return this.darkMode ? bg_desktop_dark : bg_desktop_light;
     },
+    setActiveTaskAmount(){
+      return this.tasks.filter(el => el.status === 'active').length
+    }
   },
   methods: {
     setDarkMode() {
@@ -81,7 +84,7 @@ export default {
     completeTast(task){
       const index = this.tasks.findIndex(el => el.id === task);
       this.tasks[index].status = "complete";
-      console.log(this.tasks);
+      this.tasks = this.tasks.slice(); 
     },
     setActive(data){
       this.activeLink = data;
