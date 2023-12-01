@@ -1,5 +1,5 @@
 <template>
-    <div class="h-5 w-5 border rounded-full border-[#393A4C]" :class="setHover"></div>
+    <div class="h-5 w-5 border rounded-full border-[#393A4C]" :class="setHover"><slot></slot></div>
 </template>
 
 

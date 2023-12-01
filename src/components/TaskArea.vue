@@ -1,11 +1,12 @@
 <template>
 <div class="max-h-80 overflow-auto scroll">
-<main-box v-if="tasks.length === 0" class="border-b border-[#4D5066]">
+<!--<main-box v-if="tasks.length === 0" class="border-b border-[#4D5066]">
     <task-box :task="NoTaskMessage"></task-box>
-</main-box>
+</main-box>-->
 <main-box v-for="task in tasks" :key="task.id" class="border-b border-[#4D5066]">
-    <task-box @remove-task="removeTast" :task="task"></task-box>
+    <task-box @complete-task="setComplete" @remove-task="removeTast" :task="task"></task-box>
 </main-box>
+
 </div>
 </template>
 
@@ -32,12 +33,16 @@ export default{
             type: Array,
             required: true
         },
+
     },
-    emits: ['remove-task'],
+    emits: ['remove-task','complete-task'],
 
     methods: {
         removeTast(data){
             this.$emit('remove-task',data);
+        },
+        setComplete(data){
+            this.$emit('complete-task',data)
         }
     }
 }
